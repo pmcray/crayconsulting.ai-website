@@ -1,0 +1,41 @@
+name: Build and Deploy Pelican Site
+
+on:
+  push:
+    branches:
+      - main # Or your main branch name
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+        contents: write # Needed to push to gh-pages branch
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        # If using submodules for theme, uncomment:
+        # submodules: true
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12' # Specify your Python version if needed
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pelican markdown # Add any other dependencies here
+
+    - name: Build site
+      run: pelican content -o output -s publishconf.py # Use publishconf for deployment
+      env:
+          SITEURL: https://crayconsulting.ai # Ensure correct SITEURL
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
+        # Optional: If you want your custom domain set automatically
+        cname: crayconsulting.ai
