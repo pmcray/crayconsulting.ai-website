@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                        <meta charset="utf-8" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                        <meta name="generator" content="Pelican" />
+                        <title>crayconsulting.ai</title>
+                        <link rel="stylesheet" href="/theme/css/main.css" />
+        </head>
+
+        <body id="index" class="home">
+                <header id="banner" class="body">
+                        <h1><a href="/">crayconsulting.ai</a></h1>
+                        <nav><ul>
+                        </ul></nav>
+                </header><!-- /#banner -->
+        <section id="content" class="body">
+                <p>Welcome to the future.
+                 <video width="640" height="360" controls>
+  <source src="/videos/crayconsulting.ai.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</p>
+        </section>
+        {# --- Start: Add About Page Content --- #}
+
+{# Iterate through all pages to find the one with slug 'about' #}
+{% set about_page = none %}
+{% for p in pages %}
+    {# Check if the page slug is 'about'. Assumes about.md generates slug 'about'. #}
+    {% if p.slug == 'about' %}
+        {% set about_page = p %}
+    {% endif %}
+{% endfor %}
+
+{# If the 'about' page was found, display its content #}
+{% if about_page %}
+<article class="hentry about-section"> {# You can adjust the HTML structure/classes #}
+    <header>
+        {# Optionally display the page title as a heading #}
+        {# <h2 class="entry-title"><a href="{{ SITEURL }}/{{ about_page.url }}" rel="bookmark" title="Permalink to {{ about_page.title }}">{{ about_page.title }}</a></h2> #}
+    </header>
+    <div class="entry-content">
+        {{ about_page.content }} {# This renders the HTML content of about.md #}
+    </div>
+</article>
+<hr> {# Optional separator #}
+{% endif %}
+
+{# --- End: Add About Page Content --- #}
+
+{# --- Original Article Loop (Keep, Modify, or Remove) --- #}
+{% if articles %}
+    <h3>Latest Posts</h3> {# Example heading #}
+    <ul id="posts-list">
+    {% for article in articles_page.object_list %} {# Or however your theme loops articles #}
+        <li><article class="hentry">
+            <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title }}">{{ article.title }}</a></h2> </header>
+            <div class="entry-content"> {{ article.summary }} </div>{# Or article.content #}
+        </article></li>
+    {% endfor %}
+    </ul>{% endif %}
+{# --- End: Original Article Loop --- #}
+                <section id="extras" class="body">
+                                <div class="blogroll">
+                                        <h2>links</h2>
+                                        <ul>
+                                                        <li><a href="https://getpelican.com/">Pelican</a></li>
+                                                        <li><a href="https://www.python.org/">Python.org</a></li>
+                                                        <li><a href="https://palletsprojects.com/p/jinja/">Jinja2</a></li>
+                                                        <li><a href="#">You can modify those links in your config file</a></li>
+                                        </ul>
+                                </div><!-- /.blogroll -->
+                                <div class="social">
+                                        <h2>social</h2>
+                                        <ul>
+
+                                                        <li><a href="#">You can add links in your config file</a></li>
+                                                        <li><a href="#">Another social link</a></li>
+                                        </ul>
+                                </div><!-- /.social -->
+                </section><!-- /#extras -->
+
+                <footer id="contentinfo" class="body">
+                        <address id="about" class="vcard body">
+                                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>, which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                        </address><!-- /#about -->
+
+                        <p>The theme is by <a rel="nofollow" href="https://www.smashingmagazine.com/2009/08/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+                </footer><!-- /#contentinfo -->
+
+        </body>
+</html>
